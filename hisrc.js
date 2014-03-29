@@ -49,6 +49,7 @@
 
 		// get pixel ratio
 		$.hisrc.devicePixelRatio = 1;
+		debugger;
 		if(window.devicePixelRatio !== undefined) {
 			$.hisrc.devicePixelRatio = window.devicePixelRatio;
 		} else if (window.matchMedia !== undefined) {
@@ -88,14 +89,16 @@
 					return;
 				}
 
-				// if the device pixel ratio is 1, then no need to do a network connection
-				// speed test since it can't show hi-res anyways
-				if ( $.hisrc.devicePixelRatio === 1 ) {
-					$.hisrc.connectionTestResult = 'skip';
-					speedConnectionStatus = STATUS_COMPLETE;
-					$els.trigger('speedTestComplete.hisrc');
-					return;
-				}
+				// Dany commented this out because we use the hisrc package for speed testing purposes. In that case, it doesn't matter what the devicePixelRatio is -- any value for it warrants a speed test.
+
+				// // if the device pixel ratio is 1, then no need to do a network connection
+				// // speed test since it can't show hi-res anyways
+				// if ( $.hisrc.devicePixelRatio === 1 ) {
+				// 	$.hisrc.connectionTestResult = 'skip';
+				// 	speedConnectionStatus = STATUS_COMPLETE;
+				// 	$els.trigger('speedTestComplete.hisrc');
+				// 	return;
+				// }
 
 				// if we know the connection is 2g or 3g
 				// don't even bother with the speed test, cuz its slow
@@ -105,6 +108,9 @@
 				// Modified by Adam Bradley for Foresight.js
 				$.hisrc.connectionType = connection.type;
 				if ( isSlowConnection ) {
+					// Dany added this line of code to ensure that the codebase that relies on the bandwidth property to be set has a value.
+					$.hisrc.bandwidth = 'low';
+
 					// we know this connection is slow, don't bother even doing a speed test
 					$.hisrc.connectionTestResult = 'connTypeSlow';
 					speedConnectionStatus = STATUS_COMPLETE;
