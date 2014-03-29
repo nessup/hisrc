@@ -49,7 +49,6 @@
 
 		// get pixel ratio
 		$.hisrc.devicePixelRatio = 1;
-		debugger;
 		if(window.devicePixelRatio !== undefined) {
 			$.hisrc.devicePixelRatio = window.devicePixelRatio;
 		} else if (window.matchMedia !== undefined) {
